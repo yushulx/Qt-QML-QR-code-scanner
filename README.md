@@ -46,3 +46,6 @@ If the code cannot work for you, please check the frame pixel format and then up
     delete[] grayscale;
 #endif
 ```
+
+## Blog
+[How to Build a QR Code Scanner for Windows and Android with Qt QML](https://www.dynamsoft.com/codepool/qt-qml-qr-code-scanner.html)
