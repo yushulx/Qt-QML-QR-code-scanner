@@ -1,52 +1,48 @@
-import QtQuick 2.0
-import QtMultimedia 5.4
+import QtQuick
+import QtMultimedia
+import com.dynamsoft.barcode
 
-import com.dynamsoft.barcode 1.0
+Window {
+    width: 640
+    height: 480
+    visible: true
+    title: qsTr("Hello World")
 
-Item {
-    width: 1280
-    height: 720
-
-    Camera {
-        id: camera
-        captureMode: Camera.CaptureVideo
-        focus {
-            focusMode: Camera.FocusContinuous
-            focusPointMode: Camera.FocusPointCenter
+    FrameProcessor {
+        id: frameProcessor
+        videoSink: viewfinder.videoSink
+        onBarcodeDetected: {
+            info.text = result
         }
-        objectName: "qrcamera"
+    }
+
+    CaptureSession {
+        id: captureSession
+        camera: Camera {
+            id: camera
+        }
+        videoOutput: viewfinder
     }
 
     VideoOutput {
         id: viewfinder
-        width: parent.width
-        height: parent.height - 50
-        source: camera
+        visible: true
         anchors.fill: parent
-        autoOrientation: true
-        filters: [ qrcodefilter ]
-    }
-
-    QRCodeFilter {
-        id: qrcodefilter
-        onFinished: {
-            info.text = result.text;
-        }
     }
 
     Column {
-        x: 10
+        anchors.horizontalCenter: parent.horizontalCenter
         y: 10
-        Text {
-            font.pointSize: 24
-            color: "green"
-            text: "Qt Demo: QR Code Scanner"
-        }
+
         Text {
             id: info
             font.pointSize: 12
             color: "green"
-            text: info.text
+            text: frameProcessor.displayString
+            horizontalAlignment: Text.AlignHCenter
         }
+
     }
+
+    Component.onCompleted: camera.start()
 }
