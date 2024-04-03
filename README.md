@@ -5,7 +5,7 @@ A cross-platform demo of a barcode and QR code scanner developed with **Qt6** an
 ## Supported Platforms
 - Windows
 - Android
-- iOS
+- iOS (Contact support@dynamsoft.com to get the shared libraries)
 
 ## Prerequisites
 - [Qt Online Installer](https://www.qt.io/download-qt-installer-oss)
