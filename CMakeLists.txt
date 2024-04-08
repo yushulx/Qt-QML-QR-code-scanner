@@ -60,12 +60,15 @@ elseif(ANDROID)
     set_target_properties(native-lib PROPERTIES IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/libs/android/libDynamsoftBarcodeReaderAndroid.so")
     target_link_libraries(${TARGET_NAME} PRIVATE native-lib)
 elseif(APPLE)
-    add_library(dbr_framework SHARED IMPORTED)
-    set_target_properties(dbr_framework PROPERTIES IMPORTED_LOCATION
-                           "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework"
-                          FRAMEWORK TRUE)
+    set_target_properties(${TARGET_NAME} PROPERTIES
+        XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
+        MACOSX_BUNDLE TRUE
+        XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks"
+    )
 
-    target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/libcryptoarm64.a" "${PROJECT_SOURCE_DIR}/libs/ios/libsslarm64.a" "${PROJECT_SOURCE_DIR}/libs/ios/libdbrarm64.a")
+    # target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/libcryptoarm64.a" "${PROJECT_SOURCE_DIR}/libs/ios/libsslarm64.a" "${PROJECT_SOURCE_DIR}/libs/ios/libdbrarm64.a")
+    target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/bridge.framework/bridge" PUBLIC "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework/DynamsoftBarcodeReader")
+    # target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/libBridgeProject.dylib" PUBLIC "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework/DynamsoftBarcodeReader")
 
     # System frameworks
     find_library(UIKIT_FRAMEWORK UIKit)
@@ -74,6 +77,20 @@ elseif(APPLE)
     endif()
 
     target_link_libraries(${TARGET_NAME} PRIVATE "${UIKIT_FRAMEWORK}")
+
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+        # COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework"
+        "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/DynamsoftBarcodeReader.framework"
+        COMMAND ls "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/DynamsoftBarcodeReader.framework"
+    )
+
+    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/libs/ios/bridge.framework"
+        "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/bridge.framework"
+    )
 endif()
 
 

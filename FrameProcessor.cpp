@@ -4,7 +4,11 @@
 #include <QDebug>
 #include <QThread>
 
+#ifdef Q_OS_IOS
+#include "libs/ios/framework/bridge.h"
+#else
 #include "DynamsoftBarcodeReader.h"
+#endif
 
 FrameProcessor::FrameProcessor(QObject *parent) : QObject(parent)
 {
@@ -29,9 +33,10 @@ FrameProcessor::FrameProcessor(QObject *parent) : QObject(parent)
 
 FrameProcessor::~FrameProcessor()
 {
+    // disconnect(workerThread, &QThread::finished, processor, &QObject::deleteLater);
     // workerThread->quit();
     // workerThread->wait();
-    delete workerThread;
+    // delete workerThread;
 }
 
 QVideoSink *FrameProcessor::videoSink() const

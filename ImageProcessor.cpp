@@ -1,20 +1,18 @@
 #include "ImageProcessor.h"
+#ifdef Q_OS_IOS
+#include "libs/ios/framework/bridge.h"
+#else
 #include "DynamsoftBarcodeReader.h"
+#endif
+
 #include <QImage>
 
 ImageProcessor::ImageProcessor(QObject *parent) : QObject(parent)
 {
-    // reader = NULL;
     reader = DBR_CreateInstance();
 
-    char errorMessage[256];
-    PublicRuntimeSettings settings;
-    DBR_GetRuntimeSettings(reader, &settings);
-    //        settings.deblurLevel = 0;
-    //        settings.timeout = 50;
-    // settings.expectedBarcodesCount = 999;
-    //        settings.barcodeFormatIds = BF_QR_CODE;
-    DBR_UpdateRuntimeSettings(reader, &settings, errorMessage, 256);
+    char errorMessage[512];
+    DBR_InitRuntimeSettingsWithString(reader, "{\"Version\":\"3.0\", \"ImageParameter\":{\"Name\":\"IP1\", \"BarcodeFormatIds\":[\"BF_ALL\"], \"ExpectedBarcodesCount\":10}}", CM_OVERWRITE, errorMessage, 512);
 }
 
 ImageProcessor::~ImageProcessor()

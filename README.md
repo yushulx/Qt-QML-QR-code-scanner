@@ -5,7 +5,19 @@ A cross-platform demo of a barcode and QR code scanner developed with **Qt6** an
 ## Supported Platforms
 - Windows
 - Android
-- iOS (Contact support@dynamsoft.com to get the shared libraries)
+- iOS
+    
+    1. Find the identity:
+        ```bash
+        security find-identity -v -p codesigning
+        ```
+
+    2. Replace the `IDENTITY` with your own and sign the frameworks:
+    
+        ```bash
+        /usr/bin/codesign --force --sign "IDENTITY" --timestamp=none --deep libs/ios/DynamsoftBarcodeReader.framework
+        /usr/bin/codesign --force --sign "IDENTITY" --timestamp=none --deep libs/ios/bridge.framework
+        ```
 
 ## Prerequisites
 - [Qt Online Installer](https://www.qt.io/download-qt-installer-oss)

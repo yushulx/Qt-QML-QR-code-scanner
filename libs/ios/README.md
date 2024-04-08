@@ -1,1 +1,0 @@
-Contact support@dynamsoft.com to get the shared libraries
