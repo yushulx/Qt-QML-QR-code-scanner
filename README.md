@@ -27,9 +27,15 @@ A cross-platform demo of a barcode and QR code scanner developed with **Qt6** an
 ## Usage
 1. Load the project into Qt Creator (**Windows** or **macOS**) via `CMakeLists.txt` and configure the build environment as follows:
 
-    ![Qt project for Windows and Android](https://www.dynamsoft.com/codepool/img/2024/04/qt6-cmake-config.png)
+    **Windows**
    
-2. Set the license key in `FrameProcessor.cpp`:
+    ![Qt project for Windows and Android](https://www.dynamsoft.com/codepool/img/2024/04/qt6-cmake-config.png)
+
+    **macOS**
+   
+    <img src="https://www.dynamsoft.com/codepool/img/2024/04/qt-creator-macos.jpg" width="640" alt="Qt Creator for macOS">
+   
+1. Set the license key in `FrameProcessor.cpp`:
 
     ```cpp
     DBR_InitLicense("LICENSE-KEY", errorMsgBuffer, 512);
