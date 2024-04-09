@@ -56,4 +56,5 @@ A cross-platform demo of a barcode and QR code scanner developed with **Qt6** an
     <img src="https://www.dynamsoft.com/codepool/img/2024/04/qt6-ios-qrcode-scanner.png" width="250" alt="Qt QR Code scanner for iOS">
 
 ## Blog
-[Building a Barcode and QR Code Scanner for Windows and Android with Qt6](https://www.dynamsoft.com/codepool/qt-qml-qr-code-scanner.html)
+- [Building a Barcode and QR Code Scanner for Windows and Android with Qt6](https://www.dynamsoft.com/codepool/qt-qml-qr-code-scanner.html)
+- [Integrating Third-Party iOS Frameworks into a Qt6 Barcode and QR Code Scanner](https://www.dynamsoft.com/codepool/qt6-barcode-scanner-link-ios-framework.html)
